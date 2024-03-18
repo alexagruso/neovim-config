@@ -1,0 +1,14 @@
+{
+    "Guard Clause": {
+        "prefix": "#g",
+        "body": [
+            "#ifndef $1",
+            "#define $1",
+            "",
+            "$2",
+            "",
+            "#endif // $1"
+        ],
+        "description": "guard clause for header files"
+    }
+}
