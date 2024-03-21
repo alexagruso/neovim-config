@@ -25,6 +25,7 @@ if not vim.loop.fs_stat(lazypath) then
   vim.fn.system { 'git', 'clone', '--filter=blob:none', '--branch=stable', lazyrepo, lazypath }
 end
 
+vim.loader.enable()
 vim.opt.rtp:prepend(lazypath)
 
 vim.opt.foldmethod = 'expr'
@@ -110,6 +111,10 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>fb', vimcmd 'Telescope file_browser', { desc = 'Open Telescope [F]ile [B]rowser' })
 vim.keymap.set('n', '<leader>ga', vimcmd 'tabnew', { desc = 'Create new tab' })
+
+vim.keymap.set('n', '<leader>dc', vimcmd 'TroubleClose', { desc = '[C]lose Trouble' })
+vim.keymap.set('n', '<leader>dd', vimcmd 'TroubleToggle', { desc = '[D]ocument [D]iagnostics' })
+vim.keymap.set('n', '<leader>dt', vimcmd 'TodoTrouble', { desc = '[D]ocument [T]asks' })
 
 vim.keymap.set('n', 'f', vimcmd 'HopWord', { desc = 'Hop' })
 
@@ -494,9 +499,23 @@ require('lazy').setup {
 
   {
     'nvim-telescope/telescope-file-browser.nvim',
-    dependencies = { 'nvim-telescope/telescope.nvim', 'nvim-lua/plenary.nvim' },
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+    },
   },
-  'folke/trouble.nvim',
+  {
+    'folke/trouble.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    opts = {
+      position = 'right',
+      width = 50,
+      icons = true,
+      multiline = true,
+    },
+  },
   {
     'm4xshen/autoclose.nvim',
     opts = {},
@@ -507,7 +526,7 @@ require('lazy').setup {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'material'
+      vim.cmd.colorscheme 'material-deep-ocean'
     end,
   },
   {
@@ -515,9 +534,9 @@ require('lazy').setup {
     lazy = false,
     priority = 1000,
     config = function()
-      vim.opt.background = 'light'
-      vim.g.gruvbox_material_background = 'soft'
-      vim.g.gruvbox_material_better_performance = 1
+      -- vim.opt.background = 'dark'
+      -- vim.g.gruvbox_material_background = 'hard'
+      -- vim.g.gruvbox_material_better_performance = 1
       -- vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
@@ -534,6 +553,27 @@ require('lazy').setup {
     config = function()
       require('hop').setup {
         keys = 'etovxqpdygfblzhckisuran',
+      }
+    end,
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = {
+      'nvim-tree/nvim-web-devicons',
+    },
+    config = function()
+      require('lualine').setup {
+        options = {
+          theme = 'base16',
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch', 'diff', 'diagnostics' },
+          lualine_c = { 'filename', 'filetype' },
+          lualine_x = { 'searchcount' },
+          lualine_y = { 'encoding' },
+          lualine_z = { 'location' },
+        },
       }
     end,
   },
