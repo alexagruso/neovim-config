@@ -1,3 +1,4 @@
+--  TODO: vim debugger (vimspector and codelldb configs)
 --  TODO: organize config into seperate files
 --  TODO: place keymap commands into cmd function
 
@@ -34,7 +35,7 @@ vim.g.maplocalleader = ' '
 
 vim.g.vsnip_snippet_dir = '~/.config/nvim/snippets'
 
-vim.g.material_style = 'palenight'
+vim.g.material_style = 'deep ocean'
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -100,7 +101,7 @@ vim.keymap.set('n', '<leader>tt', vimcmd 'tabnew' .. vimcmd 'terminal' .. 'A', {
 vim.keymap.set('n', '<leader>tx', vimcmd 'split' .. vimcmd 'terminal' .. 'A', { desc = 'Open [T]erminal in split' })
 vim.keymap.set('n', '<leader>tv', vimcmd 'vsplit' .. vimcmd 'terminal' .. 'A', { desc = 'Open [T]erminal in [V]split' })
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-c>exit<CR>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>' .. vimcmd 'q', { desc = 'Exit terminal mode' })
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
@@ -109,6 +110,8 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 vim.keymap.set('n', '<leader>fb', vimcmd 'Telescope file_browser', { desc = 'Open Telescope [F]ile [B]rowser' })
 vim.keymap.set('n', '<leader>ga', vimcmd 'tabnew', { desc = 'Create new tab' })
+
+vim.keymap.set('n', 'f', vimcmd 'HopWord', { desc = 'Hop' })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -503,20 +506,35 @@ require('lazy').setup {
     'marko-cerovac/material.nvim',
     lazy = false,
     priority = 1000,
-    -- config = function()
-    --   vim.cmd.colorscheme 'material'
-    -- end,
+    config = function()
+      vim.cmd.colorscheme 'material'
+    end,
   },
   {
     'sainnhe/gruvbox-material',
     lazy = false,
     priority = 1000,
     config = function()
-      vim.opt.background = 'dark'
-      vim.g.gruvbox_material_background = 'hard'
+      vim.opt.background = 'light'
+      vim.g.gruvbox_material_background = 'soft'
       vim.g.gruvbox_material_better_performance = 1
-
-      vim.cmd.colorscheme 'gruvbox-material'
+      -- vim.cmd.colorscheme 'gruvbox-material'
+    end,
+  },
+  {
+    'voldikss/vim-floaterm',
+    config = function()
+      vim.keymap.set('n', '<leader>tf', vimcmd 'FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish', { desc = '[F]loating terminal' })
+    end,
+  },
+  {
+    'smoka7/hop.nvim',
+    version = '*',
+    opts = {},
+    config = function()
+      require('hop').setup {
+        keys = 'etovxqpdygfblzhckisuran',
+      }
     end,
   },
 }
