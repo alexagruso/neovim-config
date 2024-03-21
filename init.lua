@@ -7,6 +7,16 @@ function vimcmd(command)
   return '<cmd>' .. command .. '<CR>'
 end
 
+-- switch between two colorschemes
+---@diagnostic disable-next-line lowercase-global
+function switchColorScheme()
+  if vim.g.background == 'light' then
+    vim.background = 'dark'
+  else
+    vim.background = 'light'
+  end
+end
+
 -- install lazy if not found
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -16,12 +26,15 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 vim.g.vsnip_snippet_dir = '~/.config/nvim/snippets'
 
-vim.g.material_style = 'deep ocean'
+vim.g.material_style = 'palenight'
 
 vim.opt.number = true
 vim.opt.relativenumber = true
@@ -68,11 +81,14 @@ vim.opt.scrolloff = 10
 vim.opt.inccommand = 'split'
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 
-vim.keymap.set('n', '<leader>cf', vimcmd 'vsplit $MYVIMRC', { desc = 'Open [C]onfig [F]ile' })
+vim.keymap.set('n', '<leader>cfh', vimcmd 'e $MYVIMRC', { desc = 'Open [C]onfig [F]ile [H]ere' })
+vim.keymap.set('n', '<leader>cft', vimcmd 'tabnew $MYVIMRC', { desc = 'Open [C]onfig [F]ile in new [T]ab' })
+vim.keymap.set('n', '<leader>cfx', vimcmd 'split $MYVIMRC', { desc = 'Open [C]onfig [F]ile in split' })
+vim.keymap.set('n', '<leader>cfv', vimcmd 'vsplit $MYVIMRC', { desc = 'Open [C]onfig [F]ile in [V]split' })
 vim.keymap.set('n', '<leader>cs', vimcmd 'source $MYVIMRC', { desc = 'Source [C]onfig File' })
 
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set('n', '<Esc>', vimcmd 'nohlsearch')
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
@@ -120,10 +136,8 @@ require('lazy').setup {
   {
     'folke/which-key.nvim',
     event = 'VimEnter',
-    config = function() -- This is the function that runs, AFTER loading
+    config = function()
       require('which-key').setup()
-
-      -- Document existing key chains
       require('which-key').register {
         ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
         ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
@@ -132,6 +146,7 @@ require('lazy').setup {
         ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
         ['<leader>t'] = { name = '[T]erminal', _ = 'which_key_ignore' },
         ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+        ['<leader>cf'] = { name = 'Neovim [C]onfig [F]ile', _ = 'which_key_ignore' },
       }
     end,
   },
@@ -281,11 +296,12 @@ require('lazy').setup {
             },
           },
         },
+        taplo = {},
       }
 
       require('mason').setup()
       require('mason-lspconfig').setup {
-        ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer' },
+        ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer', 'taplo' },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -297,6 +313,7 @@ require('lazy').setup {
 
       require('mason-tool-installer').setup {
         ensure_installed = {
+          'codelldb',
           'clang-format',
           'fixjson',
           'prettierd',
@@ -343,11 +360,13 @@ require('lazy').setup {
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-vsnip',
       'hrsh7th/vim-vsnip',
+      'onsails/lspkind.nvim',
     },
     config = function()
       -- See `:help cmp`
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
+      local lspkind = require 'lspkind'
       luasnip.config.setup {}
 
       cmp.setup {
@@ -377,20 +396,26 @@ require('lazy').setup {
         },
         sources = {
           { name = 'nvim_lsp' },
+          { name = 'nvim_lsp_signature_help' },
           { name = 'vsnip' },
           { name = 'path' },
+          { name = 'buffer' },
+        },
+        formatting = {
+          format = lspkind.cmp_format(),
+        },
+        view = {
+          entries = { name = 'custom', selection_order = 'near_cursor' },
+        },
+        window = {
+          completion = cmp.config.window.bordered(),
+          documentation = cmp.config.window.bordered(),
         },
       }
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`
-    'folke/tokyonight.nvim',
-  },
+  'folke/tokyonight.nvim',
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
@@ -449,11 +474,17 @@ require('lazy').setup {
           'rust',
           'scss',
           'svelte',
+          'toml',
           'typescript',
         },
         auto_install = true,
         highlight = { enable = true },
         indent = { enable = true },
+        rainbow = {
+          enable = true,
+          extended_mode = true,
+          max_file_lines = nil,
+        },
       }
     end,
   },
@@ -472,11 +503,22 @@ require('lazy').setup {
     'marko-cerovac/material.nvim',
     lazy = false,
     priority = 1000,
+    -- config = function()
+    --   vim.cmd.colorscheme 'material'
+    -- end,
+  },
+  {
+    'sainnhe/gruvbox-material',
+    lazy = false,
+    priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'material'
+      vim.opt.background = 'dark'
+      vim.g.gruvbox_material_background = 'hard'
+      vim.g.gruvbox_material_better_performance = 1
+
+      vim.cmd.colorscheme 'gruvbox-material'
     end,
   },
 }
-
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
