@@ -283,20 +283,24 @@ require('lazy').setup {
         },
       }
 
-      local ensure_installed = vim.tbl_keys(servers or {})
-      vim.list_extend(ensure_installed, {
-        'stylua',
-        'rust_analyzer',
-      })
-
       require('mason').setup()
       require('mason-lspconfig').setup {
+        ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer' },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
             require('lspconfig')[server_name].setup(server)
           end,
+        },
+      }
+
+      require('mason-tool-installer').setup {
+        ensure_installed = {
+          'clang-format',
+          'fixjson',
+          'prettierd',
+          'stylua',
         },
       }
     end,
@@ -316,7 +320,7 @@ require('lazy').setup {
         json = { 'fixjson' },
         lua = { 'stylua' },
         rust = { 'rustfmt' },
-        typescript = { 'prettier' },
+        typescript = { 'prettierd' },
       },
     },
   },
