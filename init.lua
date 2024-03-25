@@ -18,6 +18,12 @@ function switchColorScheme()
   end
 end
 
+-- unmap function
+---@diagnostic disable-next-line lowercase-global
+function unmap()
+  return function() end
+end
+
 -- install lazy if not found
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -83,6 +89,9 @@ vim.opt.scrolloff = 10
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
+
+-- unmap
+vim.keymap.set('i', '<C-u>', unmap(), { desc = 'Unmap Ctrl + U' })
 
 vim.keymap.set('n', '<leader>cfh', vimcmd 'e $MYVIMRC', { desc = 'Open [C]onfig [F]ile [H]ere' })
 vim.keymap.set('n', '<leader>cft', vimcmd 'tabnew $MYVIMRC', { desc = 'Open [C]onfig [F]ile in new [T]ab' })
@@ -521,7 +530,18 @@ require('lazy').setup {
   },
   {
     'm4xshen/autoclose.nvim',
-    opts = {},
+    opts = {
+      keys = {
+        ["'"] = {
+          escape = true,
+          close = true,
+          pair = "''",
+          disabled_filetypes = {
+            'rust',
+          },
+        },
+      },
+    },
   },
   {
     'marko-cerovac/material.nvim',
