@@ -28,6 +28,7 @@ end
 vim.loader.enable()
 vim.opt.rtp:prepend(lazypath)
 
+vim.opt.foldenable = false
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 
@@ -520,7 +521,6 @@ require('lazy').setup {
     'm4xshen/autoclose.nvim',
     opts = {},
   },
-
   {
     'marko-cerovac/material.nvim',
     lazy = false,
@@ -530,20 +530,9 @@ require('lazy').setup {
     end,
   },
   {
-    'sainnhe/gruvbox-material',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      -- vim.opt.background = 'dark'
-      -- vim.g.gruvbox_material_background = 'hard'
-      -- vim.g.gruvbox_material_better_performance = 1
-      -- vim.cmd.colorscheme 'gruvbox-material'
-    end,
-  },
-  {
     'voldikss/vim-floaterm',
     config = function()
-      vim.keymap.set('n', '<leader>tf', vimcmd 'FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish', { desc = '[F]loating terminal' })
+      vim.keymap.set('n', '<leader>ft', vimcmd 'FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2 fish', { desc = '[F]loating [T]erminal' })
     end,
   },
   {
@@ -564,7 +553,7 @@ require('lazy').setup {
     config = function()
       require('lualine').setup {
         options = {
-          theme = 'base16',
+          theme = 'codedark',
         },
         sections = {
           lualine_a = { 'mode' },
