@@ -310,7 +310,7 @@ require('lazy').setup {
 
       require('mason').setup()
       require('mason-lspconfig').setup {
-        ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer', 'taplo' },
+        ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer', 'taplo', 'texlab' },
         handlers = {
           function(server_name)
             local server = servers[server_name] or {}
@@ -325,6 +325,7 @@ require('lazy').setup {
           'codelldb',
           'clang-format',
           'fixjson',
+          'latexindent',
           'prettierd',
           'stylua',
         },
@@ -346,6 +347,7 @@ require('lazy').setup {
         json = { 'fixjson' },
         lua = { 'stylua' },
         rust = { 'rustfmt' },
+        tex = { 'latexindent' },
         typescript = { 'prettierd' },
       },
     },
@@ -566,6 +568,10 @@ require('lazy').setup {
       }
     end,
   },
+  --  TODO: figure out latex live preview
+  -- {
+  --   'frabjous/knap',
+  -- },
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
