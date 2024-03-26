@@ -112,7 +112,7 @@ vim.keymap.set('n', '<leader>tt', vimcmd 'tabnew' .. vimcmd 'terminal' .. 'A', {
 vim.keymap.set('n', '<leader>tx', vimcmd 'split' .. vimcmd 'terminal' .. 'A', { desc = 'Open [T]erminal in split' })
 vim.keymap.set('n', '<leader>tv', vimcmd 'vsplit' .. vimcmd 'terminal' .. 'A', { desc = 'Open [T]erminal in [V]split' })
 
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>' .. vimcmd 'q', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>' .. vimcmd 'q' .. vimcmd 'FloatermKill', { desc = 'Exit terminal mode' })
 
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
