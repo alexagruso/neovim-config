@@ -26,6 +26,7 @@ return {
         map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
         local client = vim.lsp.get_client_by_id(event.data.client_id)
+
         if client and client.server_capabilities.documentHighlightProvider then
           vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
             buffer = event.buf,
@@ -46,6 +47,7 @@ return {
     -- ':help lspconfig-all'
     local servers = {
       clangd = {},
+      emmet_ls = {},
       rust_analyzer = {},
       lua_ls = {
         settings = {
@@ -71,7 +73,14 @@ return {
 
     require('mason').setup()
     require('mason-lspconfig').setup {
-      ensure_installed = { 'clangd', 'lua_ls', 'rust_analyzer', 'taplo', 'texlab' },
+      ensure_installed = {
+        'clangd',
+        'emmet_ls',
+        'lua_ls',
+        'rust_analyzer',
+        'taplo',
+        'texlab',
+      },
       handlers = {
         function(server_name)
           local server = servers[server_name] or {}
@@ -86,6 +95,7 @@ return {
         'codelldb',
         'clang-format',
         'fixjson',
+        'html-lsp',
         'latexindent',
         'prettierd',
         'stylua',
