@@ -8,7 +8,6 @@ vim.keymap.set('n', '<leader>cfx', vimcmd 'split $MYVIMRC', { desc = 'Open [C]on
 vim.keymap.set('n', '<leader>cfv', vimcmd 'vsplit $MYVIMRC', { desc = 'Open [C]onfig [F]ile in [V]split' })
 vim.keymap.set('n', '<leader>cs', vimcmd 'source $MYVIMRC', { desc = 'Source [C]onfig File' })
 
-vim.opt.hlsearch = true
 vim.keymap.set('n', '<Esc>', vimcmd 'nohlsearch')
 
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
@@ -36,3 +35,16 @@ vim.keymap.set('n', '<leader>dd', vimcmd 'TroubleToggle', { desc = '[D]ocument [
 vim.keymap.set('n', '<leader>dt', vimcmd 'TodoTrouble', { desc = '[D]ocument [T]asks' })
 
 vim.keymap.set('n', 'f', vimcmd 'HopWord', { desc = 'Hop' })
+
+vim.keymap.set('n', '<A-<>', vimcmd 'BufferMovePrevious', { desc = 'Move current buffer left' })
+vim.keymap.set('n', '<A->>', vimcmd 'BufferMoveNext', { desc = 'Move current buffer right' })
+
+vim.keymap.set('n', '<A-1>', vimcmd 'BufferGoto 1', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-2>', vimcmd 'BufferGoto 2', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-3>', vimcmd 'BufferGoto 3', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-4>', vimcmd 'BufferGoto 4', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-5>', vimcmd 'BufferGoto 5', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-6>', vimcmd 'BufferGoto 6', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-7>', vimcmd 'BufferGoto 7', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-8>', vimcmd 'BufferGoto 8', { desc = 'Go to buffer #' })
+vim.keymap.set('n', '<A-9>', vimcmd 'BufferGoto 9', { desc = 'Go to buffer #' })

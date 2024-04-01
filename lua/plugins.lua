@@ -1,4 +1,7 @@
 require('lazy').setup {
+  -- Tabline
+  require 'plugins/barbar',
+
   -- Shortcut for commenting out current selection
   require 'plugins/comment',
 
