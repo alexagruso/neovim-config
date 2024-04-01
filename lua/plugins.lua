@@ -50,6 +50,9 @@ require('lazy').setup {
   -- Code error and warning aggregator
   require 'plugins/trouble',
 
+  -- Snippet engine
+  require 'plugins/ultisnips',
+
   -- Latex workspace plugin
   require 'plugins/vimtex',
 
