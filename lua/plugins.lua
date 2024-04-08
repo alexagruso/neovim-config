@@ -1,7 +1,4 @@
 require('lazy').setup {
-  -- Tabline
-  require 'plugins/barbar',
-
   -- Shortcut for commenting out current selection
   require 'plugins/comment',
 
@@ -52,9 +49,6 @@ require('lazy').setup {
 
   -- Code error and warning aggregator
   require 'plugins/trouble',
-
-  -- Snippet engine
-  require 'plugins/ultisnips',
 
   -- Latex workspace plugin
   require 'plugins/vimtex',
