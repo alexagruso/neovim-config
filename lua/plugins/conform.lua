@@ -8,9 +8,11 @@ return {
       lsp_fallback = true,
     },
     formatters_by_ft = {
+      javascript = { 'prettierd' },
       json = { 'fixjson' },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
+      scss = { 'prettierd' },
       tex = { 'latexindent' },
       typescript = { 'prettierd' },
     },

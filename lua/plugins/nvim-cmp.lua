@@ -6,12 +6,12 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-nvim-lua',
+    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-path',
     {
       'L3MON4D3/LuaSnip',
-      build = (function()
-        return 'make install_jsregexp'
-      end)(),
+      version = 'v2.*',
+      build = 'make install_jsregexp',
     },
   },
   config = function()
@@ -19,18 +19,27 @@ return {
     local cmp = require 'cmp'
 
     cmp.setup {
+      -- entries from these sources will show up in the completion menu
       sources = {
+        { name = 'luasnip' },
         { name = 'nvim_lsp' },
         { name = 'nvim_lsp_signature_help' },
         { name = 'path' },
         { name = 'buffer' },
       },
+
+      -- snippet engine
       snippet = {
         expand = function(args)
-          vim.fn['UltiSnips#Anon'](args.body)
+          require('luasnip').lsp_expand(args.body)
         end,
       },
+
+      -- completion menu behaviour
+      -- see :h 'completeopt'
       completion = { completeopt = 'menu,menuone,noinsert' },
+
+      -- completion menu keybinds
       mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-p>'] = cmp.mapping.select_prev_item(),
