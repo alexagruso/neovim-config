@@ -46,10 +46,10 @@ return {
         ['<C-y>'] = cmp.mapping.confirm { select = true },
         ['<C-Space>'] = cmp.mapping.complete {},
 
-        ['<C-l>'] = cmp.mapping(function(fallback)
+        ['<C-l>'] = cmp.mapping(function(_)
           --  TODO: setup snippets
         end, { 'i', 's' }),
-        ['<C-h>'] = cmp.mapping(function(fallback)
+        ['<C-h>'] = cmp.mapping(function(_)
           --  TODO: setup snippets
         end, { 'i', 's' }),
       },
@@ -60,5 +60,10 @@ return {
     }
 
     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+
+    --  TODO: move these into separate config for luasnips
+    local snippets = require 'luasnip.loaders.from_vscode'
+    snippets.lazy_load { paths = { '../../snippets/cpp.json' } }
+    snippets.lazy_load { paths = { '../../snippets/svelte.json' } }
   end,
 }
