@@ -28,4 +28,4 @@ require 'keymaps'
 require 'lazy-bootstrap'
 
 -- Load lazy plugins
-require 'plugins'
+require 'lazy-plugins'

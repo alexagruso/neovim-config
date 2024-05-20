@@ -8,15 +8,12 @@ return {
     'hrsh7th/cmp-nvim-lua',
     'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-path',
-    {
-      'L3MON4D3/LuaSnip',
-      version = 'v2.*',
-      build = 'make install_jsregexp',
-    },
+    'L3MON4D3/LuaSnip',
   },
   config = function()
     local cmp_autopairs = require 'nvim-autopairs.completion.cmp'
     local cmp = require 'cmp'
+    local luasnip = require 'luasnip'
 
     cmp.setup {
       -- entries from these sources will show up in the completion menu
@@ -47,10 +44,10 @@ return {
         ['<C-Space>'] = cmp.mapping.complete {},
 
         ['<C-l>'] = cmp.mapping(function(_)
-          --  TODO: setup snippets
+          luasnip.jump(1)
         end, { 'i', 's' }),
         ['<C-h>'] = cmp.mapping(function(_)
-          --  TODO: setup snippets
+          luasnip.jump(-1)
         end, { 'i', 's' }),
       },
       window = {
@@ -60,10 +57,5 @@ return {
     }
 
     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-
-    --  TODO: move these into separate config for luasnips
-    local snippets = require 'luasnip.loaders.from_vscode'
-    snippets.lazy_load { paths = { '../../snippets/cpp.json' } }
-    snippets.lazy_load { paths = { '../../snippets/svelte.json' } }
   end,
 }

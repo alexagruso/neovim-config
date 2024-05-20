@@ -1,6 +1,6 @@
 {
     "Guard Clause": {
-        "prefix": "#g",
+        "prefix": "guard",
         "body": [
             "#ifndef $1",
             "#define $1",

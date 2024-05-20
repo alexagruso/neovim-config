@@ -17,6 +17,9 @@ require('lazy').setup {
   -- Status bar
   require 'plugins/lualine',
 
+  -- Snippet engine
+  require 'plugins/luasnip',
+
   -- Material theme with treesitter support
   require 'plugins/material',
 
@@ -31,6 +34,9 @@ require('lazy').setup {
 
   -- Language server compatibility
   require 'plugins/nvim-lspconfig',
+
+  -- Extra scrollbar features
+  require 'plugins/nvim-scrollbar',
 
   -- Better code syntax
   require 'plugins/nvim-treesitter',
