@@ -1,0 +1,77 @@
+{
+    "Bevy App": {
+        "prefix": "bevapp",
+        "body": [
+            "use bevy::prelude::*;",
+            "",
+            "fn main() {",
+            "    App::new()",
+            "        .add_plugins(DefaultPlugins)",
+            "        .add_systems(Update, bevy::window::close_on_esc)",
+            "        .run()",
+            "}"
+        ],
+        "description": "creates a basic bevy app"
+    },
+    "Bevy Bundle": {
+        "prefix": "bevbund",
+        "body": [
+            "#[derive(Bundle)]",
+            "struct $1 {",
+            "    $2",
+            "}"
+        ],
+        "description": "creates a new bevy bundle"
+    },
+    "Bevy Component": {
+        "prefix": "bevcomp",
+        "body": [
+            "#[derive(Component)]",
+            "struct $1 {",
+            "    $2",
+            "}"
+        ],
+        "description": "creates a new bevy component"
+    },
+    "Bevy Enum Component": {
+        "prefix": "bevenum",
+        "body": [
+            "#[derive(Component)]",
+            "enum $1 {",
+            "    $2",
+            "}"
+        ],
+        "description": "creates a new bevy enum component"
+    },
+    "Bevy Marker Component": {
+        "prefix": "bevmcomp",
+        "body": [
+            "#[derive(Component)]",
+            "struct $1;"
+        ],
+        "description": "creates a new bevy marker component"
+    },
+    "Bevy Plugin": {
+        "prefix": "bevplug",
+        "body": [
+            "pub struct $1;",
+            "",
+            "impl Plugin for $1 {",
+            "    fn build(&self, app: &mut App) {",
+            "        $2",
+            "    }",
+            "}"
+        ],
+        "description": "creates a new bevy plugin"
+    },
+    "Bevy Resource": {
+        "prefix": "bevres",
+        "body": [
+            "#[derive(Resource)]",
+            "struct $1 {",
+            "    $2",
+            "}"
+        ],
+        "description": "creates a new bevy resource"
+    }
+}

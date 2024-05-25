@@ -7,7 +7,15 @@
         "snippets": [
             {
                 "language": "cpp",
-                "path": "./cpp.json"
+                "path": "./cpp/cpp.json"
+            },
+            {
+                "language": "rust",
+                "path": "./rust/rust.json"
+            },
+            {
+                "language": "rust",
+                "path": "./rust/bevy.json"
             }
         ]
     }
