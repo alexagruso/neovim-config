@@ -23,6 +23,13 @@
         ],
         "description": "creates a new bevy bundle"
     },
+    "Bevy Commands": {
+        "prefix": "bevcmd",
+        "body": [
+            "mut commands: Commands"
+        ],
+        "description": "bevy app commands"
+    },
     "Bevy Component": {
         "prefix": "bevcomp",
         "body": [
@@ -63,6 +70,20 @@
             "}"
         ],
         "description": "creates a new bevy plugin"
+    },
+    "Bevy Prelude": {
+        "prefix": "bevpre",
+        "body": [
+            "use bevy::prelude::*;"
+        ],
+        "description": "use standard bevy prelude"
+    },
+    "Bevy Query": {
+        "prefix": "bevqry",
+        "body": [
+            "$1: Query<$2>"
+        ],
+        "description": "bevy app commands"
     },
     "Bevy Resource": {
         "prefix": "bevres",
