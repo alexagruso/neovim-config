@@ -1,4 +1,0 @@
-return {
-  MAX_MENU_ENTRY_LENGTH = 30,
-  MAX_MENU_TYPE_LENGTH = 30,
-}
