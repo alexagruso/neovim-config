@@ -1,7 +1,10 @@
-vim.g.mapleader=" "
--- vim.g.maplocalleader="<space>" -- no use for this at the moment
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' ' -- no use for this at the moment
 
-vim.keymap.set("n", "<C-h>", ":wincmd h<CR>")
-vim.keymap.set("n", "<C-j>", ":wincmd j<CR>")
-vim.keymap.set("n", "<C-k>", ":wincmd k<CR>")
-vim.keymap.set("n", "<C-l>", ":wincmd l<CR>")
+-- TODO: move this to telescope config
+vim.keymap.set('n', '<leader>ff', '<cmd>Telescope find_files<cr>', { desc = '[F]ile [F]inder' })
+
+vim.keymap.set('n', '<C-h>', '<cmd>wincmd h<CR>')
+vim.keymap.set('n', '<C-j>', '<cmd>wincmd j<CR>')
+vim.keymap.set('n', '<C-k>', '<cmd>wincmd k<CR>')
+vim.keymap.set('n', '<C-l>', '<cmd>wincmd l<CR>')

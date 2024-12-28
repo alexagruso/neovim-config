@@ -1,11 +1,11 @@
 -- autocommands
-require("config.autocmds")
+require 'config.autocmds'
 
--- plugin independent key maps
-require("config.keymaps")
+-- plugin-independent key maps
+require 'config.keymaps'
 
 -- vim options
-require("config.options")
+require 'config.options'
 
 -- bootstrap lazy.nvim
-require("config.lazy_bootstrap")
+require 'config.lazy_bootstrap'
