@@ -9,3 +9,6 @@ require 'config.options'
 
 -- bootstrap lazy.nvim
 require 'config.lazy_bootstrap'
+
+-- load colorscheme
+vim.cmd 'colorscheme tokyonight-night'
