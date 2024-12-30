@@ -1,15 +1,59 @@
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
-    { 'williamboman/mason.nvim', config = true },
+    {
+      'williamboman/mason.nvim',
+      dependencies = {
+        'stevearc/dressing.nvim',
+      },
+      config = true,
+    },
+    'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'nvim-telescope/telescope.nvim',
   },
   config = function()
-    require('mason-tool-installer').setup {
-      ensure_installed = {
-        'stylua',
-        'lua-language-server',
+    vim.api.nvim_create_autocmd('LspAttach', {
+      group = vim.api.nvim_create_augroup('lsp-attach', { clear = false }),
+      callback = function(event)
+        local lsp_keymap = function(keys, func, desc, mode)
+          mode = mode or 'n'
+          vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
+        end
+
+        lsp_keymap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
+        lsp_keymap('grf', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+        lsp_keymap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
+        lsp_keymap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+      end,
+    })
+
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
+
+    local language_servers = {
+      lua_ls = {},
+    }
+
+    require('mason-lspconfig').setup {
+      automatic_installation = true,
+      ensure_installed = {}, -- mason-tool-installer can handle any mason package
+      handlers = {
+        function(server_name)
+          local server = language_servers[server_name] or {}
+          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+          require('lspconfig')[server_name].setup(server)
+        end,
       },
+    }
+
+    local formatters = {
+      'stylua',
+      'prettierd',
+    }
+
+    require('mason-tool-installer').setup {
+      ensure_installed = vim.list_extend(vim.tbl_keys(language_servers), formatters),
     }
   end,
 }
