@@ -1,10 +1,3 @@
-vim.api.nvim_create_autocmd('BufWritePre', {
-  desc = 'Run conform.nvim formatter for current buffer on save',
-  callback = function(args)
-    require('conform').format { bufnr = args.buf }
-  end,
-})
-
 vim.api.nvim_create_autocmd('InsertEnter', {
   desc = 'Disable relative number lines when entering insert mode',
   callback = function()
