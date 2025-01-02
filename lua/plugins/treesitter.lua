@@ -3,7 +3,15 @@ return {
   build = ':TSUpdate',
   main = 'nvim-treesitter.configs',
   opts = {
-    ensure_installed = { 'lua' },
+    ensure_installed = {
+      'css',
+      'html',
+      'javascript',
+      'lua',
+      'scss',
+      'svelte',
+      'typescript',
+    },
     auto_install = true,
     highlight = { enable = true },
   },
