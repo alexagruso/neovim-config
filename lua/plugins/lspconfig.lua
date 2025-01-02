@@ -24,7 +24,7 @@ return {
         lsp_keymap('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
         lsp_keymap('grf', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         lsp_keymap('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
-        lsp_keymap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
+        lsp_keymap('<leader>rn', vim.lsp.buf.rename, '[R]e[N]ame')
       end,
     })
 
@@ -33,6 +33,9 @@ return {
 
     local language_servers = {
       lua_ls = {},
+      rust_analyzer = {},
+      svelte = {},
+      ts_ls = {},
     }
 
     require('mason-lspconfig').setup {
