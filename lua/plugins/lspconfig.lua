@@ -51,8 +51,9 @@ return {
     }
 
     local formatters = {
-      'stylua',
+      'black',
       'prettierd',
+      'stylua',
     }
 
     require('mason-tool-installer').setup {
