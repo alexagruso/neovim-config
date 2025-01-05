@@ -7,6 +7,7 @@ return {
       'css',
       'html',
       'javascript',
+      'latex',
       'lua',
       'scss',
       'svelte',

@@ -35,6 +35,7 @@ return {
       lua_ls = {},
       rust_analyzer = {},
       svelte = {},
+      texlab = {},
       ts_ls = {},
     }
 
@@ -52,6 +53,7 @@ return {
 
     local formatters = {
       'black',
+      'latexindent',
       'prettierd',
       'stylua',
     }
