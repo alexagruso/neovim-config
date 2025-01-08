@@ -32,6 +32,7 @@ return {
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
     local language_servers = {
+      jsonls = {},
       lua_ls = {},
       rust_analyzer = {},
       svelte = {},
