@@ -34,6 +34,7 @@ return {
     local language_servers = {
       jsonls = {},
       lua_ls = {},
+      pylsp = {},
       rust_analyzer = {},
       svelte = {},
       texlab = {},
