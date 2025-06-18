@@ -11,4 +11,4 @@ require 'config.options'
 require 'config.lazy_bootstrap'
 
 -- load colorscheme
-vim.cmd 'colorscheme tokyonight-night'
+vim.cmd 'colorscheme everforest'
