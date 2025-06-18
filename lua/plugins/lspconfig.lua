@@ -36,6 +36,7 @@ return {
     local language_servers = {
       bashls = {},
       cssls = {},
+      clangd = {},
       html = {},
       intelephense = {},
       jsonls = {},
@@ -44,6 +45,13 @@ return {
       rust_analyzer = {},
       svelte = {},
       texlab = {},
+      tinymist = {
+        settings = {
+          formatterMode = 'typstyle',
+          exportPdf = 'onType',
+          semanticTokens = 'disable',
+        },
+      },
       ts_ls = {},
     }
 
@@ -59,6 +67,7 @@ return {
       },
     }
 
+    -- TODO: move this to conform config file
     local formatters = {
       'beautysh',
       'black',

@@ -17,6 +17,7 @@ return {
       python = { 'black' },
       scss = { 'prettierd' },
       typescript = { 'prettierd' },
+      typst = { 'prettypst' },
     },
   },
 }
