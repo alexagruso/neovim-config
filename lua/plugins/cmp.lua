@@ -7,5 +7,9 @@ return {
   opts = {
     snippets = { preset = 'luasnip' },
     sources = { default = { 'lsp', 'snippets' } },
+    completion = {
+      ghost_text = { enabled = true },
+      menu = {},
+    },
   },
 }
