@@ -9,5 +9,6 @@ return {
     vim.keymap.set('n', '<leader>sf', Vimcmd 'Telescope find_files', { desc = '[s]earch [f]iles' })
     vim.keymap.set('n', '<leader>sg', Vimcmd 'Telescope live_grep', { desc = '[s]earch with [g]rep' })
     vim.keymap.set('n', '<leader>sh', Vimcmd 'Telescope help_tags', { desc = '[s]earch [h]elp tags' })
+    vim.keymap.set('n', '<leader>st', Vimcmd 'TodoTelescope', { desc = '[s]earch [t]odo tags' })
   end,
 }

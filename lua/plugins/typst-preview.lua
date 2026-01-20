@@ -4,5 +4,6 @@ return {
   version = '1.*',
   opts = {
     open_cmd = 'brave %s',
+    port = 8080,
   },
 }

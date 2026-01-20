@@ -1,18 +1,48 @@
 return {
   'neovim/nvim-lspconfig',
-  dependencies = {
-    {
-      'williamboman/mason.nvim',
-      dependencies = {
-        'stevearc/dressing.nvim',
+  opts = {
+    servers = {
+      emmylua_ls = {},
+      tinymist = {
+        settings = {
+          exportPdf = 'onSave',
+          formatterMode = 'typstyle',
+          lint = {
+            enabled = true,
+          },
+        },
       },
-      config = true,
+      rust_analyzer = {
+        settings = {
+          ['rust-analyzer'] = {
+            cargo = {
+              features = 'all',
+            },
+          },
+        },
+      },
     },
-    'williamboman/mason-lspconfig.nvim',
-    'WhoIsSethDaniel/mason-tool-installer.nvim',
-    'nvim-telescope/telescope.nvim',
   },
-  config = function()
+  dependencies = {
+    'mason-org/mason.nvim',
+    -- Required for mason language filter to work properly
+    'stevearc/dressing.nvim',
+    'nvim-telescope/telescope.nvim',
+    {
+      'folke/lazydev.nvim',
+      ft = 'lua',
+      opts = {
+        library = {
+          -- Load luvit types when the `vim.uv` word is found
+          { path = '${3rd}/luv/library', words = { 'vim%.uv' } },
+        },
+      },
+    },
+    'saghen/blink.cmp',
+  },
+  config = function(_, opts)
+    require('mason').setup()
+
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('lsp-attach', { clear = false }),
       callback = function(event)
@@ -29,60 +59,11 @@ return {
       end,
     })
 
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
-    -- List of supported language servers
-    local language_servers = {
-      bashls = {},
-      cssls = {},
-      clangd = {},
-      html = {},
-      intelephense = {},
-      jsonls = {},
-      lua_ls = {},
-      pylsp = {},
-      rust_analyzer = {},
-      svelte = {},
-      texlab = {},
-      tinymist = {
-        settings = {
-          formatterMode = 'typstyle',
-          exportPdf = 'onType',
-          semanticTokens = 'disable',
-        },
-      },
-      ts_ls = {},
-    }
-
-    require('mason-lspconfig').setup {
-      automatic_installation = true,
-      ensure_installed = {}, -- mason-tool-installer can handle any mason package
-      handlers = {
-        function(server_name)
-          local server = language_servers[server_name] or {}
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
-    }
-
-    -- TODO: move this to conform config file
-    local formatters = {
-      'beautysh',
-      'black',
-      'clang-format',
-      'fixjson',
-      'gofumpt',
-      'latexindent',
-      'prettierd',
-      'pretty-php',
-      'stylua',
-      'xmlformatter',
-    }
-
-    require('mason-tool-installer').setup {
-      ensure_installed = vim.list_extend(vim.tbl_keys(language_servers), formatters),
-    }
+    local blink = require 'blink.cmp'
+    for server, config in pairs(opts.servers) do
+      config.capabilities = blink.get_lsp_capabilities(config.capabilities)
+      vim.lsp.config(server, config)
+      vim.lsp.enable(server)
+    end
   end,
 }
