@@ -25,3 +25,9 @@ vim.api.nvim_create_autocmd('TermOpen', {
     vim.opt_local.spell = false
   end,
 })
+
+vim.api.nvim_create_autocmd('FileType', {
+  -- TODO: extend to more file types
+  pattern = { 'wgsl' },
+  callback = function() vim.treesitter.start() end,
+})
