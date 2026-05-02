@@ -1,3 +1,4 @@
+-- TODO: flesh this out more
 require 'utils'
 
 vim.g.mapleader = ' '

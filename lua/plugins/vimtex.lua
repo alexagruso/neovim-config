@@ -1,5 +1,3 @@
---  NOTE: this has been replaced by typst-preview, kept for
---  backwards-compatibility
 return {
   'lervag/vimtex',
   enable = false,

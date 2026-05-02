@@ -1,3 +1,4 @@
+-- TODO: flesh this out more
 vim.opt.number = true
 vim.opt.relativenumber = true
 
