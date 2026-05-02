@@ -56,6 +56,7 @@ return {
         lsp_keymap('gD', vim.diagnostic.open_float, '[g]oto [D]iagnostic')
         lsp_keymap('grf', require('telescope.builtin').lsp_references, '[g]oto [r]e[f]erences')
         lsp_keymap('gI', require('telescope.builtin').lsp_implementations, '[g]oto [I]mplementation')
+        lsp_keymap('<leader>ca', vim.lsp.buf.code_action, '[c]ode [a]ction')
         lsp_keymap('<leader>rn', vim.lsp.buf.rename, '[r]e[n]ame')
       end,
     })
